@@ -35,7 +35,7 @@ Backend
 - Helmet - Added HTTP protection
 - validatorjs - Return 'laravel-like' validation errors (Pretty DOPE!)
 - mongoose-paginate-v2 - Paginate data from mongoose models
-```json
+```
 return {
     data: data.docs,
     meta: {
