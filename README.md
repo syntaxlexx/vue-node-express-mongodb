@@ -86,6 +86,13 @@ with just a snap! - Thanos fans out there
 
 Read more on the `README` inside the vue-js-client-crud folder
 
+### Envoy
+There is an additional Envoy file for easier deployments to production. Simply provide the 
+username and server URL
+```bash
+envoy run update --user=root --ip=100.100.100.100
+``` 
+
 ##### What Else?
 Hmm..... let's see
 
