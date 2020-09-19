@@ -46,5 +46,11 @@ pm2 logs --format       # Formated output
 
 pm2 flush               # Flush all logs
 pm2 reloadLogs          # Reload all logs
+
+// monitor port
+// get the PID by running
+pm2 list
+// then eye-ball the port via
+sudo netstat -ano -p tcp | grep <PID>
 ```
 
