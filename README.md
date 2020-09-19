@@ -19,7 +19,13 @@ This funding is used for maintaining the project and adding new features into Co
 
 
 ## Demo Links
-> Coming Soon
+Front-End
+`https://eager-galileo-1369f9.netlify.app/`
+
+[Link](https://eager-galileo-1369f9.netlify.app/)
+
+Backend
+`Do you need it really?`
 
 ## Tech Stack
 ### Node
@@ -31,19 +37,19 @@ This funding is used for maintaining the project and adding new features into Co
 - mongoose-paginate-v2 - Paginate data from mongoose models
 ```json
 return {
-    meta: {
-      total: data.totalDocs,
-      per_page: data.limit,
-      current_page: data.page,
-      last_page: data.totalPages,
-      from: data.page,
-      to: data.docs.length,
-      prev_page: data.prevPage,
-      next_page: data.nextPage,
-      has_prev_page: data.hasPrevPage,
-      has_next_page: data.hasNextPage,
-    },
     data: data.docs,
+    meta: {
+        total: data.totalDocs,
+        per_page: data.limit,
+        current_page: data.page,
+        last_page: data.totalPages,
+        from: data.page,
+        to: data.docs.length,
+        prev_page: data.prevPage,
+        next_page: data.nextPage,
+        has_prev_page: data.hasPrevPage,
+        has_next_page: data.hasNextPage,
+    },
 }
 ```
 
@@ -93,3 +99,10 @@ Send PR! I'd appreciate it!
 
 ## Licence
 - MIT
+
+## Outro
+Need help in setting up your own server, website, or just...talk?
+
+Reach me via any of our email.
+- [Lexx YungCarter](mailto:lexxyungcarter@gmail.com)
+- [AceLords](mailto:info@acelords.space)
