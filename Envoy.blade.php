@@ -24,6 +24,7 @@
         'app_live_dir'      => 'app',
         'app_node_dir'      => 'app/nodejs-express-mongodb',
         'script_file'        => 'server.js',
+        'type'              => 'node', // either node or frontend
     ];
 
     array_push($projects, $projectA); // Vuemongo Demo Server
@@ -77,21 +78,19 @@
     @if(count($projects) > 0)
 
         @foreach($projects as $item)
-            echo '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-            echo 'Project: {{ $item['name'] }}'
-            echo '------------------------------------------'
-            echo "Restarting PM2"
-            cd {{ $item['app_dir'] }}
-            cd {{ $item['app_node_dir'] }}
-            pm2 stop {{ $item['script_file'] }}
-            pm2 start {{ $item['script_file'] }}
-            echo "Done!"
+            @if($item['type'] == "node")
+                echo '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+                echo 'Project: {{ $item['name'] }}'
+                echo '------------------------------------------'
+                echo "Restarting PM2"
+                cd {{ $item['app_dir'] }}
+                cd {{ $item['app_node_dir'] }}
+                pm2 stop {{ $item['script_file'] }}
+                pm2 start {{ $item['script_file'] }}
+                echo "Done!"
+            @endif
         @endforeach
 
     @endif
 
 @endtask
-
-@finished
-    @slack('https://hooks.slack.com/services/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', '#acelords-and-apps', $systemUser . ': An AceLords project task run on production server. Affected: ' . $projectsToString)
-@endfinished
