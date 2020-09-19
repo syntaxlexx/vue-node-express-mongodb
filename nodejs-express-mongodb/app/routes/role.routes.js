@@ -1,7 +1,5 @@
-module.exports = app => {
+module.exports = (app, router) => {
     const controller = require("../controllers/role.controller.js");
-
-    var router = require("express").Router();
 
     // Create new
     router.post("/", controller.create);

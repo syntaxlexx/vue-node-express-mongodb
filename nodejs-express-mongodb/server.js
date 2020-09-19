@@ -1,11 +1,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const helmet = require("helmet");
 
 const app = express();
+app.use(helmet());
+const router = express.Router();
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: [
+      "http://localhost:8081",
+      "http://nodejslive.test"
+  ]
 };
 
 app.use(cors(corsOptions));
@@ -34,8 +40,8 @@ db.mongoose
 /**
  * Seed default roles
  */
-const Role = db.role;
-const defaultRoles = db.ROLES;
+const Role = db.roles;
+const defaultRoles = db.DEFAULT_ROLES;
 function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
@@ -69,10 +75,10 @@ app.get("/", (req, res) => {
 /**
  * App routes
  */
-require("./app/routes/turorial.routes")(app);
-require("./app/routes/auth.routes")(app);
-require("./app/routes/user.routes")(app);
-require("./app/routes/role.routes")(app);
+require("./app/routes/turorial.routes")(app, router);
+require("./app/routes/auth.routes")(app, router);
+require("./app/routes/user.routes")(app, router);
+require("./app/routes/role.routes")(app, router);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

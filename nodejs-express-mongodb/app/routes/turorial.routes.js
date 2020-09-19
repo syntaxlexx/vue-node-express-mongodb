@@ -1,10 +1,10 @@
-module.exports = app => {
+const { tutorialsCrud } = require('../middlewares/validation-middleware');
+
+module.exports = (app, router) => {
     const controller = require("../controllers/tutorial.controller.js");
 
-    var router = require("express").Router();
-
     // Create a new Tutorial
-    router.post("/", controller.create);
+    router.post("/", tutorialsCrud, controller.create);
 
     // Retrieve all items
     router.get("/", controller.index);
@@ -16,7 +16,7 @@ module.exports = app => {
     router.get("/:id", controller.show);
 
     // Update a item with id
-    router.put("/:id", controller.update);
+    router.put("/:id", tutorialsCrud, controller.update);
 
     // delete all items
     router.delete("/", controller.deleteAll);

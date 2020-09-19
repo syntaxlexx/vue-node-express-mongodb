@@ -1,93 +1,132 @@
 <template>
-  <div class="list row">
-    <div class="col-md-4">
-      <router-link :to="{name: 'tutorials-create'}" class="btn btn-primary" tag="a"> Add New </router-link>
-    </div>
-    <div class="col-md-8">
-      <div class="input-group mb-3">
-        <input type="text" 
-          class="form-control" 
-          placeholder="Search by title"
-          v-model="searchTitle"
-        />
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button"
-            @click="page = 1; retrieveTutorials();"
+  <div>
+    <vs-card>
+      <div class="tw-flex tw-justify-between">
+        <vs-select
+            class=""
+            label="Items per Page:"
+            v-model="pageSize"
+            icon-pack="mdi"
+            icon="mdi-chevron-down"
+            @change="handlePageSizeChange"
+        >
+          <vs-select-item
+              v-for="size in pageSizes"
+              :key="size"
+              :value="size"
+              :text="size"
+          />
+        </vs-select>
+
+        <vs-paginator
+            v-if="meta"
+            :meta="meta"
+            @change="handlePageChange"
+        ></vs-paginator>
+
+      </div>
+    </vs-card>
+
+    <vs-card>
+      <div slot="header">
+        <h3>Tutorials</h3>
+      </div>
+
+      <div class="tw-flex tw-flex-wrap">
+        <div class="tw-w-full tw-flex tw-justify-between tw-items-center">
+          <div class="tw-flex">
+            <vs-input
+                icon="mdi-magnify"
+                icon-pack="mdi"
+                placeholder="Search"
+                v-model="searchTitle"
+            />
+
+            <vs-button
+                radius
+                color="primary"
+                type="border"
+                icon-pack="mdi"
+                icon="mdi-magnify"
+                @click="page = 1; get();"
+            ></vs-button>
+          </div>
+
+          <vs-button
+              color="primary"
+              type="filled"
+              :to="{name: 'tutorials-create'}"
           >
-            Search
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <h4>Tutorials List</h4>
-      <ul class="list-group">
-        <li class="list-group-item"
-          :class="{ active: index == currentIndex }"
-          v-for="(tutorial, index) in list"
-          :key="index"
-          @click="setActiveTutorial(tutorial, index)"
-        >
-          {{ tutorial.title }}
-        </li>
-      </ul>
-
-      <button class="m-3 btn btn-sm btn-danger" @click="removeAllTutorials">
-        Remove All
-      </button>
-    </div>
-    <div class="col-md-6">
-      <div v-if="currentTutorial">
-        <h4>Tutorial</h4>
-        <div>
-          <label><strong>Title:</strong></label> {{ currentTutorial.title }}
-        </div>
-        <div>
-          <label><strong>Description:</strong></label> {{ currentTutorial.description }}
-        </div>
-        <div>
-          <label><strong>Status:</strong></label> {{ currentTutorial.published ? "Published" : "Pending" }}
+            Add New
+          </vs-button>
         </div>
 
-        <router-link 
-          tag="a" 
-          class="badge badge-warning" 
-          :to="{name: 'tutorials-show', params: {id: currentTutorial.id}}"
-        >
-          Edit
-        </router-link>
-      </div>
-      <div v-else>
-        <br />
-        <p>Please click on a Tutorial...</p>
-      </div>
-    </div>
-    <div class="col-md-12">
-      <div class="mb-3">
-        Items per Page:
-        <select v-model="pageSize" @change="handlePageSizeChange($event)">
-          <option v-for="size in pageSizes" :key="size" :value="size">
-            {{ size }}
-          </option>
-        </select>
+        <div class="tw-w-full">
+          <vs-divider></vs-divider>
+        </div>
+
+        <div class="tw-w-full lg:tw-w-1/2">
+          <div v-if="loading">Loading...</div>
+
+          <vs-table stripe :data="list">
+            <template slot="header">
+              <h3>List</h3>
+            </template>
+            <template slot="thead">
+              <vs-th>#</vs-th>
+              <vs-th>Title</vs-th>
+            </template>
+            <template slot-scope="{data}">
+              <vs-tr v-for="(item, i) in data" :key="i" >
+                <vs-td>
+                  {{ i + 1 }}.
+                </vs-td>
+                <vs-td :data="item.title">
+                  <div @click="show(item, i)">{{ item.title }}</div>
+                </vs-td>
+              </vs-tr>
+            </template>
+          </vs-table>
+
+          <vs-button type="gradient" color="danger" @click="removeAll">Remove All</vs-button>
+        </div>
+
+        <div class="tw-w-full lg:tw-w-1/2 lg:tw-pl-5">
+          <vs-card v-if="selected">
+            <div slot="header">
+              <h3>{{ selected.title }}</h3>
+            </div>
+            <div>
+              {{ selected.description }}
+
+              <div>
+                <strong>Status: </strong> {{ selected.published ? "Published" : "Pending" }}
+              </div>
+            </div>
+            <div slot="footer">
+              <vs-row vs-justify="flex-end">
+                <vs-button type="gradient" color="danger" icon-pack="mdi" icon="mdi-favorite" :to="{name: 'tutorials-show', params: {id: selected.id}}">Edit</vs-button>
+              </vs-row>
+            </div>
+          </vs-card>
+
+          <div v-else>
+            <br />
+            <vs-alert active="true" color="info">
+              Select a Tutorial to Show
+            </vs-alert>
+          </div>
+        </div>
       </div>
 
-      <b-pagination
-        v-model="page"
-        :total-rows="count"
-        :per-page="pageSize"
-        prev-text="Prev"
-        next-text="Next"
-        @change="handlePageChange"
-        pills
-      ></b-pagination>
-    </div>
+    </vs-card>
+
   </div>
 </template>
 
 <script>
-  import TutorialDataService from "@/services/TutorialDataService";
   import { paginatorMixin } from "@/mixins/paginatorMixin";
+  import Tutorial from "@/libs/tutorials/Tutorial";
 
   export default {
     name: "tutorials-index",
@@ -96,66 +135,119 @@
     ],
     data() {
       return {
-        list: [],
-        currentTutorial: null,
-        currentIndex: -1,
+        obj: new Tutorial(),
         searchTitle: "",
+        loading: false,
       };
     },
+
+    computed: {
+      tutorials() {
+        return this.obj.tutorials
+      },
+
+      selected() {
+        return this.obj.selected
+      },
+
+      saved() {
+        return this.obj.saved
+      },
+
+      deleted() {
+        return this.obj.deleted
+      },
+
+      list() {
+        if(this.tutorials && this.tutorials.data)
+          return this.tutorials.data
+
+        return []
+      },
+
+      meta() {
+        if(this.tutorials && this.tutorials.meta)
+          return this.tutorials.meta
+
+        return null
+      },
+
+      submitted() {
+        return this.obj.form.submitted
+      },
+
+      contaminated() {
+        return this.obj.form.errorDetected
+      }
+    },
+
+    watch: {
+      contaminated(val) {
+        this.loading = false
+      },
+
+      submitted(val) {
+        if(val)
+          this.loading = false
+      },
+
+      saved(val) {
+        if(val)
+          this.get()
+      },
+
+      deleted(val) {
+        if(val)
+          this.get()
+      },
+    },
+
     methods: {
-      retrieveTutorials() {
+      get() {
         const params = this.getRequestParams(
           this.searchTitle,
           this.page,
           this.pageSize
         );
 
-        TutorialDataService.getAll(params)
-          .then((response) => {
-            const { data, total } = response.data;
-            this.list = data;
-            this.count = total;
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+        this.loading = true
+        this.obj.getAll(params)
       },
 
-      handlePageChange(value) {
-        this.page = value;
-        this.retrieveTutorials();
+      handlePageChange(page) {
+        this.page = page;
+        this.get(page);
       },
 
-      handlePageSizeChange(event) {
-        this.pageSize = event.target.value;
+      handlePageSizeChange() {
         this.page = 1;
-        this.retrieveTutorials();
+        this.get(this.page);
       },
 
       refreshList() {
-        this.retrieveTutorials();
-        this.currentTutorial = null;
-        this.currentIndex = -1;
+        this.get();
+        this.obj.selected = null;
       },
 
-      setActiveTutorial(tutorial, index) {
-        this.currentTutorial = tutorial;
-        this.currentIndex = index;
+      show(item, index) {
+        this.obj.selected = item;
       },
 
-      removeAllTutorials() {
-        TutorialDataService.deleteAll()
-          .then(response => {
-            this.refreshList();
-          })
-          .catch(e => {
-            console.log(e);
-          });
+      removeAll() {
+        this.loading = true
+        this.obj.deleteAll()
       },
+
+      isActive(item) {
+        if(! this.selected)
+          return false;
+
+        return item.id == this.selected.id
+      }
     },
     
     mounted() {
-      this.retrieveTutorials();
+      this.get();
     }
   };
 </script>

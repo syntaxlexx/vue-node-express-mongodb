@@ -1,6 +1,6 @@
 const db = require("../models");
 const Model = db.tutorials;
-const { getPagination } = require('../helpers/paginator')
+const { getPaginationOptions, returnPaginated } = require('../helpers/paginator')
 const resourceName = 'Tutorial'
 
 /**
@@ -14,17 +14,9 @@ exports.index = (req, res) => {
     ? { title: { $regex: new RegExp(title), $options: "i" } }
     : {};
 
-  const { limit, offset } = getPagination(page, size);
-
-  Model.paginate(condition, { offset, limit })
+  Model.paginate(condition, getPaginationOptions(page, size))
     .then((data) => {
-      res.send({
-        total: data.totalDocs,
-        per_page: limit,
-        current_page: data.page - 1,
-        last_page: data.totalPages,
-        data: data.docs,
-      });
+      res.send(returnPaginated(data));
     })
     .catch((err) => {
       res.status(500).send({
@@ -37,12 +29,6 @@ exports.index = (req, res) => {
 
 // Create and Save a new item
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.title) {
-    res.status(400).send({ message: "Content can not be empty!" });
-    return;
-  }
-
   // Create a new item
   const item = new Model({
     title: req.body.title,
@@ -83,21 +69,17 @@ exports.show = (req, res) => {
 
 // Update an item by the id in the request
 exports.update = (req, res) => {
-  if (!req.body) {
-    return res.status(400).send({
-      message: "Data to update can not be empty!"
-    });
-  }
-
   const id = req.params.id;
 
-  Model.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  Model.findByIdAndUpdate(id, req.body, { useFindAndModify: false, new: true })
     .then(data => {
       if (!data) {
         res.status(404).send({
           message: `Cannot update ${resourceName} with id=${id}. Maybe ${resourceName} was not found!`
         });
-      } else res.send({ message: `${resourceName} was updated successfully.` });
+      } else {
+        res.send(data);
+      }
     })
     .catch(err => {
       res.status(500).send({

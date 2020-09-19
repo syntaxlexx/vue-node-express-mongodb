@@ -1,5 +1,5 @@
 const db = require("../models");
-const Model = db.role;
+const Model = db.roles;
 const resourceName = 'Role'
 
 /**
@@ -8,7 +8,7 @@ const resourceName = 'Role'
  * @param {*} res 
  */
 exports.index = (req, res) => {
-  Model.find({})
+  Model.findAll({})
     .then((data) => {
       res.send({
         data: data.docs,

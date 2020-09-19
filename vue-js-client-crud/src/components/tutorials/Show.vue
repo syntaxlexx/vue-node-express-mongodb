@@ -1,124 +1,142 @@
 <template>
-  <div v-if="currentTutorial" class="edit-form">
-    <h4>Tutorial</h4>
-    <form>
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title"
-          v-model="currentTutorial.title"
+  <vs-card>
+    <div v-if="selected" class="edit-form">
+      <div slot="header">
+        <vs-title back>Tutorial</vs-title>
+      </div>
+
+      <form>
+        <vs-input
+            class=""
+            placeholder="Placeholder"
+            v-model="obj.columns.title"
+            title="Title"
+            name="title"
+            id="title"
+            required
         />
-      </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input type="text" class="form-control" id="description"
-          v-model="currentTutorial.description"
+
+        <br/>
+
+        <vs-textarea
+            v-model="obj.columns.description"
+            name="description"
+            placeholder="Description"
         />
+
+        <div class="form-group">
+          <label><strong>Status:</strong></label>
+          {{ obj.columns.published ? "Published" : "Pending" }}
+        </div>
+      </form>
+
+      <vs-error :errors="errors"></vs-error>
+
+      <vs-button v-if="obj.columns.published" color="warning" @click="updatePublished(false)">UnPublish</vs-button>
+      <vs-button v-else color="primary" @click="updatePublished(true)">Publish</vs-button>
+
+      <vs-button color="danger" @click="deleteItem">Delete</vs-button>
+
+      <vs-button color="success" @click="update">Update</vs-button>
+
+      <p>{{ message }}</p>
+    </div>
+
+    <div v-else>
+      <div slot="header">
+        <vs-title back>No Tutorial Selected</vs-title>
       </div>
 
-      <div class="form-group">
-        <label><strong>Status:</strong></label>
-        {{ currentTutorial.published ? "Published" : "Pending" }}
-      </div>
-    </form>
+      <p>Please click on a Tutorial...</p>
+    </div>
+  </vs-card>
 
-    <button class="badge badge-primary mr-2"
-      v-if="currentTutorial.published"
-      @click="updatePublished(false)"
-    >
-      UnPublish
-    </button>
-    <button v-else class="badge badge-primary mr-2"
-      @click="updatePublished(true)"
-    >
-      Publish
-    </button>
-
-    <button class="badge badge-danger mr-2"
-      @click="deleteTutorial"
-    >
-      Delete
-    </button>
-
-    <button type="submit" class="badge badge-success"
-      @click="updateTutorial"
-    >
-      Update
-    </button>
-    <p>{{ message }}</p>
-  </div>
-
-  <div v-else>
-    <br />
-    <p>Please click on a Tutorial...</p>
-  </div>
 </template>
 
 <script>
-  import TutorialDataService from "@/services/TutorialDataService";
+  import Tutorial from "@/libs/tutorials/Tutorial";
 
   export default {
     name: "tutorials-show",
     data() {
       return {
-        currentTutorial: null,
+        obj: new Tutorial(),
+        loading: false,
         message: ''
       };
     },
+
+    computed: {
+      saved() {
+        return this.obj.saved
+      },
+
+      deleted() {
+        return this.obj.deleted
+      },
+
+      submitted() {
+        return this.obj.form.submitted
+      },
+
+      contaminated() {
+        return this.obj.form.errorDetected
+      },
+
+      errors() {
+        return this.obj.form.errors
+      },
+
+      selected() {
+        return this.obj.selected
+      },
+    },
+
+    watch: {
+      contaminated(val) {
+        this.loading = false
+      },
+
+      submitted(val) {
+        if(val)
+          this.loading = false
+      },
+
+      saved(val) {
+        if(val)
+          this.message = 'The tutorial was updated successfully!';
+      },
+
+      deleted(val) {
+        if(val)
+          this.$router.go(-1) // back
+      },
+    },
+
     methods: {
-      getTutorial(id) {
-        TutorialDataService.get(id)
-          .then(response => {
-            this.currentTutorial = response.data;
-            console.log(response.data);
-          })
-          .catch(e => {
-            console.log(e);
-          });
+      get(id) {
+        this.obj.get(id, true);
       },
 
       updatePublished(status) {
-        var data = {
-          id: this.currentTutorial.id,
-          title: this.currentTutorial.title,
-          description: this.currentTutorial.description,
-          published: status
-        };
-
-        TutorialDataService.update(this.currentTutorial.id, data)
-          .then(response => {
-            this.currentTutorial.published = status;
-            console.log(response.data);
-          })
-          .catch(e => {
-            console.log(e);
-          });
+        this.obj.columns.published = status
+        return this.update()
       },
 
-      updateTutorial() {
-        TutorialDataService.update(this.currentTutorial.id, this.currentTutorial)
-          .then(response => {
-            console.log(response.data);
-            this.message = 'The tutorial was updated successfully!';
-          })
-          .catch(e => {
-            console.log(e);
-          });
+      update() {
+        this.loading = true
+        this.obj.update(this.selected.id, true)
       },
 
-      deleteTutorial() {
-        TutorialDataService.delete(this.currentTutorial.id)
-          .then(response => {
-            console.log(response.data);
-            this.$router.push({ name: "tutorials" });
-          })
-          .catch(e => {
-            console.log(e);
-          });
+      deleteItem() {
+        this.loading = true
+        this.obj.delete(this.selected.id)
       }
     },
+
     mounted() {
       this.message = '';
-      this.getTutorial(this.$route.params.id);
+      this.get(this.$route.params.id);
     }
   };
 </script>

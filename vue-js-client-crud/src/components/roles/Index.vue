@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import RoleDataService from "@/services/RoleDataService";
+  // import RoleDataService from "@/services/RoleDataService";
 
   export default {
     name: "roles-index",
@@ -35,14 +35,14 @@
 
     methods: {
       initialise() {
-        RoleDataService.getAll()
-          .then((response) => {
-            const { data } = response.data;
-            this.list = data;
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+        // RoleDataService.getAll()
+        //   .then((response) => {
+        //     const { data } = response.data;
+        //     this.list = data;
+        //   })
+        //   .catch((e) => {
+        //     console.log(e);
+        //   });
       },
 
       refreshList() {
@@ -57,13 +57,13 @@
       },
 
       removeAllItems() {
-        RoleDataService.deleteAll()
-          .then(response => {
-            this.refreshList();
-          })
-          .catch(e => {
-            console.log(e);
-          });
+        // RoleDataService.deleteAll()
+        //   .then(response => {
+        //     this.refreshList();
+        //   })
+        //   .catch(e => {
+        //     console.log(e);
+        //   });
       },
     },
 

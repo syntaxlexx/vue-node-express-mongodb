@@ -10,14 +10,36 @@ import { tutorials } from './tutorials'
 import { users } from './users'
 import { roles } from './roles'
 
-let routeDefinitions = [
+let appRoutes = [
   {
-    path: "/",
-    alias: "/home",
-    name: "home",
-    component: () => import("@/components/Home")
+    path: '',
+    component: () => import('@/components/layout/full/MainContainer.vue'),
+    
+    children: [
+      {
+          path: '/',
+          redirect: '/home'
+      },
+      {
+        path: "/home",
+        name: "home",
+        component: () => import("@/components/pages/Home.vue")
+      },
+      {
+        path: "/page-not-found",
+        name: "page-not-found",
+        component: () => import("@/components/pages/PageNotFound.vue")
+      },
+    ],
   },
+  // Redirect to 404 page, if no match found
+  {
+    path: '*',
+    redirect: '/page-not-found'
+  }
 ];
+
+let routeDefinitions = [];
 
 [tutorials, users, roles]
   .forEach( route => {
@@ -26,10 +48,12 @@ let routeDefinitions = [
 
   });
 
+appRoutes[0].children = appRoutes[0].children.concat(routeDefinitions)
+
 /**
  * Finally export the entire router
  */
 export default new Router({
   mode: "history",
-  routes: routeDefinitions,
+  routes: appRoutes,
 });

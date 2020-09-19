@@ -9,10 +9,10 @@ const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.url;
 
-db.tutorials = require("./tutorial.model.js")(mongoose, mongoosePaginate);
-db.user = require("./user.model")(mongoose, mongoosePaginate);
-db.role = require("./role.model")(mongoose);
+db.tutorials = require("./tutorial.model")(mongoose, mongoosePaginate);
+db.users = require("./user.model")(mongoose, mongoosePaginate);
+db.roles = require("./role.model")(mongoose);
 
-db.ROLES = ["user", "admin", "moderator", "sudo"];
+db.DEFAULT_ROLES = ["user", "admin", "moderator", "sudo"];
 
 module.exports = db;

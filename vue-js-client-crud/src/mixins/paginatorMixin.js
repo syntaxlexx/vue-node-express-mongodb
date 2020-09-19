@@ -2,9 +2,7 @@ export const paginatorMixin = {
   data() {
     return {
       page: 1,
-      count: 0,
       pageSize: 3,
-
       pageSizes: [3, 6, 9],
     };
   },
@@ -17,7 +15,7 @@ export const paginatorMixin = {
       }
 
       if (page) {
-        params["page"] = page - 1;
+        params["page"] = page;
       }
 
       if (pageSize) {
