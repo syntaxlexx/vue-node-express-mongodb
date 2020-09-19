@@ -10,7 +10,8 @@ const router = express.Router();
 var corsOptions = {
   origin: [
       "http://localhost:8081",
-      "http://nodejslive.test"
+      "http://nodejslive.test",
+      "https://eager-galileo-1369f9.netlify.app"
   ]
 };
 
