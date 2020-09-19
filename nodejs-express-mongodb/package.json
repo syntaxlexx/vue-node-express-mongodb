@@ -10,6 +10,9 @@
     "nodejs",
     "express"
   ],
+  "engines": {
+    "node": "10.15.1"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
