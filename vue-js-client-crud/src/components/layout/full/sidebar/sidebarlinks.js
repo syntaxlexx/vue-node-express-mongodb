@@ -23,5 +23,11 @@ export default [
 		icon:"mdi-account-group",
 		iconPack: 'mdi',
 	},
+	{
+		url:"/roles",
+		name:"Roles",
+		icon:"mdi-shield-account",
+		iconPack: 'mdi',
+	},
 
 ]

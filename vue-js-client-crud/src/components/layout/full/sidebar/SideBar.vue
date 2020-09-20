@@ -24,13 +24,14 @@
             :to="sidebarLink.url" 
             :key="`sidebarLink-${index}`" 
             :index="index"
+            @click="handleClicked(sidebarLink)"
           >
             <span class="hide-in-minisidebar">{{ sidebarLink.name }}</span>
           </vs-sidebar-item>
       </template>
     
       <div class="footer-sidebar" slot="footer">
-          <vs-button icon="reply" color="danger" type="flat" href="https://www.wrappixel.com">Upgrade to Pro</vs-button>
+          <vs-button icon="mdi-github" icon-pack="mdi" color="danger" type="flat" href="https://github.com/lexxyungcarter/vue-node-express-mongodb">Github</vs-button>
       </div>
 
     </vs-sidebar>
@@ -58,29 +59,33 @@
         type: [String, Number]
       }
     },
+
     data:() => ({
-      doNotClose: false,
       windowWidth: window.innerWidth,
+      doNotClose: false,
     }),
+
     computed: {
-        //This is for mobile trigger
-        isSidebarActive: {
-          get() {
-            return this.$store.state.isSidebarActive
-          },
-          set(val) {
-            this.$store.commit('IS_SIDEBAR_ACTIVE', val)
-          }
+      //This is for mobile trigger
+      isSidebarActive: {
+        get() {
+          return this.$store.state.isSidebarActive
+        },
+        set(val) {
+          this.$store.commit('IS_SIDEBAR_ACTIVE', val)
         }
+      }
     },
+
     watch: {
         
-    },   
-    methods : {
+    },
+
+    methods: {
       handleWindowResize(event) {
-            this.windowWidth = event.currentTarget.innerWidth;
-            this.setSidebar();
-        },
+        this.windowWidth = event.currentTarget.innerWidth;
+        this.setSidebar();
+      },
       setSidebar() {
         if (this.windowWidth < 1170) {
           this.$store.commit('IS_SIDEBAR_ACTIVE', false);
@@ -90,14 +95,22 @@
           this.$store.commit('IS_SIDEBAR_ACTIVE', true);
           this.doNotClose= true 
         }
+      },
+      handleClicked(sidebarLink) {
+        if(! this.doNotClose) {
+          this.$store.commit('IS_SIDEBAR_ACTIVE', false);
+          this.doNotClose= false
+        }
       }
     },
+
     mounted() {
       this.$nextTick(() => {
-            window.addEventListener('resize', this.handleWindowResize);
-        });
+        window.addEventListener('resize', this.handleWindowResize);
+      });
       this.setSidebar();
     },
+
     beforeDestroy() {
       window.removeEventListener('resize', this.handleWindowResize);
       this.setSidebar();

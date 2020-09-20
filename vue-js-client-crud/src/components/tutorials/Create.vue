@@ -8,7 +8,7 @@
       <div v-if="! saved">
         <vs-input
             class=""
-            placeholder="Placeholder"
+            placeholder="Title"
             v-model="obj.columns.title"
             title="Title"
             name="title"
@@ -105,8 +105,5 @@
 </script>
 
 <style>
-  .submit-form {
-    max-width: 300px;
-    margin: auto;
-  }
+
 </style>

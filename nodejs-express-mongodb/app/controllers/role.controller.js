@@ -8,13 +8,13 @@ const resourceName = 'Role'
  * @param {*} res 
  */
 exports.index = (req, res) => {
-  Model.findAll({})
-    .then((data) => {
+  Model.find({})
+    .then(data => {
       res.send({
-        data: data.docs,
+        data: data.docs || [],
       });
     })
-    .catch((err) => {
+    .catch(err => {
       res.status(500).send({
         message:
           err.message || `Some error occurred while retrieving ${resourceName}s.`,

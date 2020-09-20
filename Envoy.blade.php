@@ -94,3 +94,7 @@
     @endif
 
 @endtask
+
+@finished
+    @slack('https://hooks.slack.com/my-webhook-url', '#my-app', $systemUser . ': My project task run on production server. Affected: ' . $projectsToString)
+@endfinished

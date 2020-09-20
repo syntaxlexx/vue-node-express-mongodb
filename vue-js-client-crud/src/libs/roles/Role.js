@@ -8,10 +8,10 @@
 import Base from '@/libs/requests/Base';
 import Form from '@/libs/requests/Form';
 
-import { fields } from './UserRepository';
-const routePrefix = 'users'
+import { fields } from './RoleRepository';
+const routePrefix = 'roles'
 
-export default class User extends Base {
+export default class Role extends Base {
 
     constructor() {
         super(fields);
@@ -20,7 +20,7 @@ export default class User extends Base {
 
         this.selected = null;
 
-        this.users = null;
+        this.roles = null;
 
         this.saved = false;
 
@@ -35,7 +35,7 @@ export default class User extends Base {
 
         this.form.submit('get', url).then(response => {
 
-            this.users = response;
+            this.roles = response;
 
         });
     }
@@ -61,7 +61,7 @@ export default class User extends Base {
 
             this.saved = true;
 
-            flash({message: 'User Added', alert: 'success'})
+            flash({message: 'Role Added', alert: 'success'})
 
         });
     }
@@ -74,7 +74,7 @@ export default class User extends Base {
 
             this.saved = true;
 
-            flash({message: 'User Updated', alert: 'success'})
+            flash({message: 'Role Updated', alert: 'success'})
 
             if(prefill)
                 this.prefill(response)
@@ -89,7 +89,7 @@ export default class User extends Base {
 
             this.deleted = true;
 
-            flash({message: 'User Deleted', alert: 'success'})
+            flash({message: 'Role Deleted', alert: 'success'})
 
         });
     }
@@ -101,30 +101,18 @@ export default class User extends Base {
 
             this.deleted = true;
 
-            flash({message: 'All Users Deleted', alert: 'success'})
-
-        });
-    }
-
-    findByUsername(title) {
-        let url = `/${routePrefix}?title=${title}`
-
-        this.form.submit('get', url).then(response => {
-
-            this.users = response;
+            flash({message: 'All Roles Deleted', alert: 'success'})
 
         });
     }
 
     reset() {
-        this.columns.title = null
+        this.columns.name = name
         this.columns.description = null
-        this.columns.published = false
     }
 
     prefill(data) {
-        this.columns.title = data.title
+        this.columns.name = data.name
         this.columns.description = data.description
-        this.columns.published = data.published
     }
 }

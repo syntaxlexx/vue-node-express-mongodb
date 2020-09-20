@@ -7,14 +7,7 @@ const app = express();
 app.use(helmet());
 const router = express.Router();
 
-var corsOptions = {
-  origin: [
-      "http://localhost:8081",
-      "http://nodejslive.test",
-      "https://eager-galileo-1369f9.netlify.app"
-  ]
-};
-
+const corsOptions = require('./config/cors.config');
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
@@ -76,10 +69,10 @@ app.get("/", (req, res) => {
 /**
  * App routes
  */
-require("./app/routes/turorial.routes")(app, router);
-require("./app/routes/auth.routes")(app, router);
-require("./app/routes/user.routes")(app, router);
-require("./app/routes/role.routes")(app, router);
+require("./app/routes/turorial.routes")(app, express);
+require("./app/routes/auth.routes")(app, express);
+require("./app/routes/user.routes")(app, express);
+require("./app/routes/role.routes")(app, express);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;

@@ -4,6 +4,8 @@ module.exports = (mongoose, mongoosePaginate) => {
       username: String,
       email: String,
       password: String,
+      gender: String,
+      phone: String,
       roles: [
         {
           type: mongoose.Schema.Types.ObjectId,
@@ -22,6 +24,5 @@ module.exports = (mongoose, mongoosePaginate) => {
 
   schema.plugin(mongoosePaginate);
 
-  const User = mongoose.model("User", schema);
-  return User;
+  return mongoose.model("User", schema);
 }

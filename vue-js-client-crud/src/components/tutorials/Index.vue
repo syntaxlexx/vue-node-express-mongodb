@@ -130,9 +130,11 @@
 
   export default {
     name: "tutorials-index",
+
     mixins: [
       paginatorMixin,
     ],
+
     data() {
       return {
         obj: new Tutorial(),
@@ -237,13 +239,6 @@
         this.loading = true
         this.obj.deleteAll()
       },
-
-      isActive(item) {
-        if(! this.selected)
-          return false;
-
-        return item.id == this.selected.id
-      }
     },
     
     mounted() {
@@ -253,9 +248,5 @@
 </script>
 
 <style>
-  .list {
-    text-align: left;
-    max-width: 750px;
-    margin: auto;
-  }
+
 </style>

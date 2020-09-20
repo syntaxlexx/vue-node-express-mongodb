@@ -1,9 +1,10 @@
 const { tutorialsCrud } = require('../middlewares/validation-middleware');
 
-module.exports = (app, router) => {
+module.exports = (app, express) => {
     const controller = require("../controllers/tutorial.controller.js");
+    var router = express.Router()
 
-    // Create a new Tutorial
+    // Create a new item
     router.post("/", tutorialsCrud, controller.create);
 
     // Retrieve all items

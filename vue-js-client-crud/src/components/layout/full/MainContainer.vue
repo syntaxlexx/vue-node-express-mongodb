@@ -5,13 +5,11 @@
 		<!---Sidebar-->
 		 <SideBar parent=".main-wrapper" :sidebarLinks="sidebarLinks" :static-position="staticPosition"/>
 		<!---Page Container-->
-		<div class="main-container-fluid">
-
+		<div class="main-container-fluid" :class="{ 'sidebar-active': isSidebarActive }">
       <div>
         <router-view></router-view>
       </div>
-
-		</div>	
+		</div>
 	</div>
 </template>
 
@@ -34,6 +32,12 @@
 			sidebarLinks: sidebarLinks,
       staticPosition: false,
 		}),
+
+    computed: {
+      isSidebarActive() {
+        return this.$store.state.isSidebarActive
+      }
+    },
 
 		methods: {
 			

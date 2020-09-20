@@ -1,6 +1,9 @@
 # Vue-Node-Expressjs-MongoDB-Mongoose Demo App
 A demo project to showcase usage of vue and node-powered backend service.
 
+![Screenshot1](vuemongo-screenshot1.jpg)
+
+
 ## The Setup
 `vue-js-client-crud` - Frontend code
 
@@ -98,7 +101,7 @@ Hmm..... let's see
 
 ...
 
-Send PR! I'd appreciate it!
+Send PR! I'd really appreciate it!
 
 ## Credits
 - [Lexx YungCarter](mailto:lexxyungcarter@gmail.com)
