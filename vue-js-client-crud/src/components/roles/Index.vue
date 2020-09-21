@@ -1,5 +1,7 @@
 <template>
   <div>
+    <vs-loading :loading="loading"></vs-loading>
+
     <vs-card>
       <div slot="header">
         <vs-title back>

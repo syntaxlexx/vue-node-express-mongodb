@@ -1,13 +1,13 @@
 <template>
   <div>
+    <vs-loading :loading="loading"></vs-loading>
+
     <vs-card>
       <div class="tw-flex tw-justify-between">
         <vs-select
             class=""
             label="Items per Page:"
             v-model="pageSize"
-            icon-pack="mdi"
-            icon="mdi-chevron-down"
             @change="handlePageSizeChange"
         >
           <vs-select-item
@@ -32,7 +32,13 @@
         <div class="tw-flex tw-justify-between">
           <h3>Users</h3>
 
-          <vs-button color="orange" @click="get()">Refresh</vs-button>
+          <vs-button
+              color="info"
+              type="filled"
+              :to="{name: 'users-create'}"
+          >
+            Add New
+          </vs-button>
         </div>
       </div>
 
@@ -41,7 +47,6 @@
           <div class="tw-flex">
             <vs-input
                 icon="mdi-magnify"
-                icon-pack="mdi"
                 placeholder="Search"
                 v-model="search"
             />
@@ -50,19 +55,12 @@
                 radius
                 color="primary"
                 type="border"
-                icon-pack="mdi"
                 icon="mdi-magnify"
                 @click="page = 1; get();"
             ></vs-button>
           </div>
 
-          <vs-button
-              color="primary"
-              type="filled"
-              :to="{name: 'users-create'}"
-          >
-            Add New
-          </vs-button>
+          <vs-button color="orange" @click="get()">Refresh</vs-button>
         </div>
 
         <div class="tw-w-full">
@@ -94,7 +92,7 @@
                   <div @click="show(item, i)">{{ item.email }}</div>
                 </vs-td>
                 <vs-td>
-                  <div>roles</div>
+                  <div>{{ item.roles.map(r => r.name.toUpperCase()).join(', ') }}</div>
                 </vs-td>
               </vs-tr>
             </template>
@@ -110,7 +108,9 @@
             </div>
             <div>
               <p>Email: {{ selected.email }}</p>
-              <p>Roles: {{ selected.roles }}</p>
+              <p>Phone: {{ selected.phone }}</p>
+              <p>Gender: {{ selected.gender }}</p>
+              <p>Roles: {{ selected.roles.map(r => r.name.toUpperCase()).join(', ') }}</p>
             </div>
             <div slot="footer">
               <vs-row vs-justify="flex-end">

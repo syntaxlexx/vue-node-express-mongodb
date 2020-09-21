@@ -1,55 +1,59 @@
 <template>
-  <vs-card>
-    <div v-if="selected" class="edit-form">
-      <div slot="header">
-        <vs-title back>Tutorial</vs-title>
-      </div>
+  <div>
+    <vs-loading :loading="loading"></vs-loading>
 
-      <form>
-        <vs-input
-            class=""
-            placeholder="Placeholder"
-            v-model="obj.columns.title"
-            title="Title"
-            name="title"
-            id="title"
-            required
-        />
-
-        <br/>
-
-        <vs-textarea
-            v-model="obj.columns.description"
-            name="description"
-            placeholder="Description"
-        />
-
-        <div class="form-group">
-          <label><strong>Status:</strong></label>
-          {{ obj.columns.published ? "Published" : "Pending" }}
+    <vs-card>
+      <div v-if="selected" class="edit-form">
+        <div slot="header">
+          <vs-title back>Tutorial</vs-title>
         </div>
-      </form>
 
-      <vs-error :errors="errors"></vs-error>
+        <form>
+          <vs-input
+              class=""
+              placeholder="Placeholder"
+              v-model="obj.columns.title"
+              title="Title"
+              name="title"
+              id="title"
+              required
+          />
 
-      <vs-button v-if="obj.columns.published" color="warning" @click="updatePublished(false)">UnPublish</vs-button>
-      <vs-button v-else color="primary" @click="updatePublished(true)">Publish</vs-button>
+          <br/>
 
-      <vs-button color="danger" @click="deleteItem">Delete</vs-button>
+          <vs-textarea
+              v-model="obj.columns.description"
+              name="description"
+              placeholder="Description"
+          />
 
-      <vs-button color="success" @click="update">Update</vs-button>
+          <div class="form-group">
+            <label><strong>Status:</strong></label>
+            {{ obj.columns.published ? "Published" : "Pending" }}
+          </div>
+        </form>
 
-      <p>{{ message }}</p>
-    </div>
+        <vs-error :errors="errors"></vs-error>
 
-    <div v-else>
-      <div slot="header">
-        <vs-title back>No Tutorial Selected</vs-title>
+        <vs-button v-if="obj.columns.published" color="warning" @click="updatePublished(false)">UnPublish</vs-button>
+        <vs-button v-else color="primary" @click="updatePublished(true)">Publish</vs-button>
+
+        <vs-button color="danger" @click="deleteItem">Delete</vs-button>
+
+        <vs-button color="success" @click="update">Update</vs-button>
+
+        <p>{{ message }}</p>
       </div>
 
-      <p>Please click on a Tutorial...</p>
-    </div>
-  </vs-card>
+      <div v-else>
+        <div slot="header">
+          <vs-title back>No Tutorial Selected</vs-title>
+        </div>
+
+        <p>Please click on a Tutorial...</p>
+      </div>
+    </vs-card>
+  </div>
 
 </template>
 

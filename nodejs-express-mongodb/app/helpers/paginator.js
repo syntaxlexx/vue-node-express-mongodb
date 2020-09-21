@@ -14,7 +14,7 @@ const getPagination = (page, size) => {
 const getPaginationOptions = (page, size) => {
   return {
     page: page,
-    limit: size
+    limit: size,
   };
 };
 

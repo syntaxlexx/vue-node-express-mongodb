@@ -11,16 +11,17 @@ var CryptoJS = require("crypto-js");
 
 export const visa = () => {
 
-    let tData = JSON.parse(window.sessionStorage.getItem(immigrantKey));
+    let tData = JSON.parse(window.localStorage.getItem(immigrantKey));
 
     if(tData)
     {
         // Decrypt
-        var bytes  = CryptoJS.AES.decrypt(tData.jah, cKey);
+        var bytes  = CryptoJS.AES.decrypt(tData.fifty, cKey);
 
         const headers = {
             'Accept': 'application/json',
-            'Authorization': 'Bearer ' + bytes.toString(CryptoJS.enc.Utf8),
+            // 'Authorization': 'Bearer ' + bytes.toString(CryptoJS.enc.Utf8),
+            'x-access-token': bytes.toString(CryptoJS.enc.Utf8),
         }
 
         return { headers };
@@ -30,7 +31,7 @@ export const visa = () => {
 }
 
 export const logout = () => {
-    window.sessionStorage.removeItem(immigrantKey);
+    window.localStorage.removeItem(immigrantKey);
 }
 
 export const borderPatrol = (pp) => {
@@ -49,10 +50,10 @@ export const borderPatrol = (pp) => {
         if(received.refresh_token)
             data.cents = CryptoJS.AES.encrypt(received.refresh_token, cKey).toString();
         
-        window.sessionStorage.setItem(immigrantKey, JSON.stringify(data));
+        window.localStorage.setItem(immigrantKey, JSON.stringify(data));
     }
     else {
         let yungcarter = CryptoJS.AES.encrypt(received, cKey).toString();
-        window.sessionStorage.setItem(immigrantKey, yungcarter);
+        window.localStorage.setItem(immigrantKey, yungcarter);
     }
 }

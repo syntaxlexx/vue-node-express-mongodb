@@ -8,7 +8,7 @@ const resourceName = 'Role'
  * @param {*} res 
  */
 exports.index = (req, res) => {
-  Model.find({})
+  Model.find()
     .then(data => {
       res.send({
         data: data.docs || [],

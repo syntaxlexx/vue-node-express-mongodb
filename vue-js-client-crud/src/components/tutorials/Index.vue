@@ -1,13 +1,13 @@
 <template>
   <div>
+    <vs-loading :loading="loading"></vs-loading>
+
     <vs-card>
       <div class="tw-flex tw-justify-between">
         <vs-select
             class=""
             label="Items per Page:"
             v-model="pageSize"
-            icon-pack="mdi"
-            icon="mdi-chevron-down"
             @change="handlePageSizeChange"
         >
           <vs-select-item
@@ -29,28 +29,8 @@
 
     <vs-card>
       <div slot="header">
-        <h3>Tutorials</h3>
-      </div>
-
-      <div class="tw-flex tw-flex-wrap">
-        <div class="tw-w-full tw-flex tw-justify-between tw-items-center">
-          <div class="tw-flex">
-            <vs-input
-                icon="mdi-magnify"
-                icon-pack="mdi"
-                placeholder="Search"
-                v-model="searchTitle"
-            />
-
-            <vs-button
-                radius
-                color="primary"
-                type="border"
-                icon-pack="mdi"
-                icon="mdi-magnify"
-                @click="page = 1; get();"
-            ></vs-button>
-          </div>
+        <div class="tw-flex tw-justify-between">
+          <h3>Tutorials</h3>
 
           <vs-button
               color="primary"
@@ -59,6 +39,28 @@
           >
             Add New
           </vs-button>
+        </div>
+      </div>
+
+      <div class="tw-flex tw-flex-wrap">
+        <div class="tw-w-full tw-flex tw-justify-between tw-items-center">
+          <div class="tw-flex">
+            <vs-input
+                icon="mdi-magnify"
+                placeholder="Search"
+                v-model="search"
+            />
+
+            <vs-button
+                radius
+                color="primary"
+                type="border"
+                icon="mdi-magnify"
+                @click="page = 1; get();"
+            ></vs-button>
+          </div>
+
+          <vs-button color="orange" @click="get()">Refresh</vs-button>
         </div>
 
         <div class="tw-w-full">
@@ -138,7 +140,7 @@
     data() {
       return {
         obj: new Tutorial(),
-        searchTitle: "",
+        search: "",
         loading: false,
       };
     },
@@ -207,7 +209,7 @@
     methods: {
       get() {
         const params = this.getRequestParams(
-          this.searchTitle,
+          this.search,
           this.page,
           this.pageSize
         );

@@ -5,7 +5,6 @@
         :active="true"
         color="danger"
         icon="mdi-alert"
-        icon-pack="mdi"
         class="tw-my-4"
     >
       <div v-html="errors.display()"></div>
@@ -16,7 +15,6 @@
         :active="true"
         :color="type"
         icon="mdi-alert"
-        icon-pack="mdi"
         class="tw-my-4"
     >
       <div><slot></slot></div>

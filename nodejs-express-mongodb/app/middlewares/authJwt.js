@@ -8,12 +8,12 @@ verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
 
   if (!token) {
-    return res.status(403).send({ message: "No token provided!" });
+    return res.status(403).send({ message: config.messages.tokensMissing });
   }
 
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
-      return res.status(401).send({ message: "Unauthorized!" });
+      return res.status(401).send({ message: config.messages.default });
     }
     req.userId = decoded.id;
     next();
@@ -47,7 +47,7 @@ isAdmin = (req, res, next) => {
           }
         }
 
-        res.status(403).send({ message: "Require Admin Role!" });
+        res.status(403).send({ message: config.messages.adminAccess });
         return;
       }
     );
@@ -81,7 +81,7 @@ isSudo = (req, res, next) => {
           }
         }
 
-        res.status(403).send({ message: "Require Sudo Role!" });
+        res.status(403).send({ message: config.messages.sudoAccess });
         return;
       }
     );
@@ -115,7 +115,7 @@ isModerator = (req, res, next) => {
           }
         }
 
-        res.status(403).send({ message: "Require Moderator Role!" });
+        res.status(403).send({ message: config.messages.moderatorAccess });
         return;
       }
     );

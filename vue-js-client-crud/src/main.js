@@ -5,7 +5,7 @@ require('./bootstrap')
 
 import App from './App.vue'
 import router from './routes/index'
-import Vuesax from 'vuesax'
+import Vuesax from '@acelords/vuesax'
 
 Vue.config.productionTip = false
 Vue.config.devtools = true

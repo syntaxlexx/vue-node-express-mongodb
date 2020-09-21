@@ -1,9 +1,12 @@
 module.exports = (mongoose, mongoosePaginate) => {
   var schema = mongoose.Schema(
     {
-      username: String,
-      email: String,
-      password: String,
+      username: {type: String, unique: true, required: true },
+      email: {type: String, unique: true, required: true },
+      password: {type: String, required: true },
+      first_name: String,
+      last_name: String,
+      nickname: String,
       gender: String,
       phone: String,
       roles: [

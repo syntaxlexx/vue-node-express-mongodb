@@ -3,6 +3,7 @@ const Model = db.users;
 const Role = db.roles;
 const { getPaginationOptions, returnPaginated } = require('../helpers/paginator')
 const resourceName = 'User'
+var bcrypt = require("bcryptjs");
 
 /**
  * Retrieve all items from the database.
@@ -15,7 +16,14 @@ exports.index = (req, res) => {
       ? { username: { $regex: new RegExp(username), $options: "i" } }
       : {};
 
-  Model.paginate(condition, getPaginationOptions(page, size))
+  const paginatorOptions = getPaginationOptions(page, size);
+  const options = {
+    ...paginatorOptions,
+    populate: {path: 'roles', select: '-_id -__v'},
+    select: '-password'
+  }
+
+  Model.paginate(condition, options)
       .then((data) => {
         res.send(returnPaginated(data));
       })
@@ -34,6 +42,9 @@ exports.create = (req, res) => {
   const user = new Model({
     username: req.body.username,
     email: req.body.email,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    nickname: req.body.nickname,
     phone: req.body.phone,
     gender: req.body.gender,
     password: bcrypt.hashSync(req.body.password, 8)
@@ -61,7 +72,7 @@ exports.create = (req, res) => {
                     return;
                   }
 
-                  res.send({ message: "User was registered successfully!" });
+                  res.send({ message: "User was added successfully!" });
                 });
               }
           );
@@ -79,7 +90,7 @@ exports.create = (req, res) => {
                 return;
               }
 
-              res.send({ message: "User was registered successfully!" });
+              res.send({ message: "User was added successfully!" });
             });
           });
         }

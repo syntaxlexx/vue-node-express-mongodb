@@ -3,31 +3,41 @@ export default [
 		url:"/home",
 		name:"Home",
 		icon:"mdi-home",
-		iconPack: 'mdi',
 	},
 	{
-		url:"/starterkit",
-		name:"Starterkit",
-		icon:"mdi-home",
-		iconPack: 'mdi',
+		url:"/starter-page",
+		name:"StarterPage",
+		icon:"mdi-home-export-outline",
+	},
+	{
+		url:"/login",
+		name:"Login",
+		icon:"mdi-login",
+	},
+	{
+		url:"/register",
+		name:"Register",
+		icon:"mdi-cellphone-link",
 	},
 	{
 		url:"/tutorials",
 		name:"Tutorials",
 		icon:"mdi-clipboard-text",
-		iconPack: 'mdi',
 	},
 	{
 		url:"/users",
 		name:"Users",
 		icon:"mdi-account-group",
-		iconPack: 'mdi',
 	},
 	{
 		url:"/roles",
 		name:"Roles",
 		icon:"mdi-shield-account",
-		iconPack: 'mdi',
+	},
+	{
+		url:"/page-not-found",
+		name:"Page Not Found",
+		icon:"mdi-alert-rhombus-outline",
 	},
 
 ]

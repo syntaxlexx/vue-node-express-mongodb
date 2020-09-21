@@ -3,6 +3,11 @@ export const fields = {
         username: null,
         email: null,
         password: null,
+        password_confirmation: null,
+        first_name: null,
+        last_name: null,
+        nickname: null,
+        phone: null,
         roles: ['user'],
     },
 

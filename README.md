@@ -1,7 +1,7 @@
 # Vue-Node-Expressjs-MongoDB-Mongoose Demo App
 A demo project to showcase usage of vue and node-powered backend service.
 
-![Screenshot1](vuemongo-screenshot1.jpg)
+![Screenshot1](screenshot-vuemongo.jpg)
 
 
 ## The Setup

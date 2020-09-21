@@ -13,6 +13,27 @@ const formatErrors = (err) => {
 }
 
 /**
+ * Validate signIn
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+const signIn = (req, res, next) => {
+    const validationRule = {
+        "username": "required|string|max:255",
+        "password": "required|string|min:4|max:255",
+    }
+    validator(req.body, validationRule, {}, (err, status) => {
+        if (!status) {
+            res.status(validationErrorCode).send(formatErrors(err));
+        } else {
+            next();
+        }
+    });
+}
+
+/**
  * Validate signup
  *
  * @param req
@@ -21,10 +42,13 @@ const formatErrors = (err) => {
  */
 const signup = (req, res, next) => {
     const validationRule = {
-        "email": "required|email|max:255",
-        "username": "required|string|max:255",
+        "email": "required|email|max:255|unique:User,email",
+        "username": "required|string|max:255|unique:User,username",
+        "first_name": "required|string|max:255",
+        "last_name": "required|string|max:255",
+        "nickname": "nullable|string|max:20",
         "phone": "required|string|max:20",
-        "password": "required|string|min:6|confirmed",
+        "password": "required|string|min:4|confirmed",
         "gender": "string|max:6"
     }
     validator(req.body, validationRule, {}, (err, status) => {
@@ -69,7 +93,10 @@ const usersCreate = (req, res, next) => {
     const validationRule = {
         "username": "required|string|max:255|unique:User,username",
         "email": "required|string|email|max:255|unique:User,email",
-        "password": "required|string|max:255|min:6|confirmed",
+        "first_name": "required|string|max:255",
+        "last_name": "required|string|max:255",
+        "nickname": "nullable|string|max:255",
+        "password": "required|string|max:255|min:4|confirmed",
         "gender": "required|string|max:6",
         "phone": "required|string|max:20",
         "roles": "required",
@@ -83,6 +110,13 @@ const usersCreate = (req, res, next) => {
     });
 }
 
+/**
+ * check for duplicate username or email
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 checkDuplicateUsernameOrEmail = (req, res, next) => {
     // Username
     User.findOne({
@@ -117,6 +151,13 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
     });
 };
 
+/**
+ * check for the existence of a role
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 checkRolesExisted = (req, res, next) => {
     if (req.body.roles) {
         for (let i = 0; i < req.body.roles.length; i++) {
@@ -141,4 +182,5 @@ module.exports = {
     usersCreate,
     checkDuplicateUsernameOrEmail,
     checkRolesExisted,
+    signIn,
 }

@@ -1,11 +1,14 @@
 <template>
-  <div>
-    <vs-loading :loading="loading"></vs-loading>
-
-    <vs-card>
-      <div slot="header">
-        <vs-title back>Add New User</vs-title>
+  <div class="tw-flex tw-justify-center tw-items-center">
+    <vs-card class="tw-max-w-3xl">
+      <div slot="header" class="tw-text-center">
+        <h3>Register</h3>
       </div>
+
+      <div class="tw-text-center">
+        <img src="@/assets/logo.png" class="img-fluid" alt="Logo!" style="max-height: 120px;">
+      </div>
+
 
       <form v-if="! saved" @submit.prevent="save">
         <div class="tw-flex tw-flex-wrap">
@@ -128,47 +131,37 @@
             </vs-select>
           </div>
 
-          <div class="tw-w-full md:tw-w-1/2 tw-my-1">
-            <vs-select
-                label="Role"
-                v-model="obj.columns.roles"
-                multiple
-                :danger="errors.has('roles')"
-                :danger-text="errors.get('roles')"
-            >
-              <vs-select-item
-                  v-for="item in obj.systemRoles"
-                  :key="item"
-                  :value="item"
-                  :text="item"
-              />
-            </vs-select>
-          </div>
-
         </div>
 
         <vs-error :errors="errors"></vs-error>
 
-        <vs-button type="gradient" color="primary" button="submit">Save</vs-button>
+        <vs-button type="gradient" color="primary" button="submit">Register</vs-button>
       </form>
 
       <div v-else>
-        <h4>You submitted successfully!</h4>
+        <vs-alert
+            :active="true"
+            color="success"
+            icon="mdi-check"
+            class="tw-my-4"
+        >
+          <div>Registration Successfully</div>
+        </vs-alert>
 
-        <vs-button type="gradient" color="success" @click="addNew">Add</vs-button>
+        <div class="tw-text-center">
+          Welcome back<span v-if="user">, {{ user.username }}</span>.
+        </div>
       </div>
 
     </vs-card>
-
   </div>
 </template>
 
 <script>
-
   import User from "@/libs/users/User";
 
   export default {
-    name: "users-create",
+    name: "Register",
 
     data() {
       return {
@@ -182,6 +175,11 @@
       passwordType() {
         return this.togglePassword ? 'text' : 'password'
       },
+
+      user() {
+        return this.obj.selected
+      },
+
       saved() {
         return this.obj.saved
       },
@@ -219,21 +217,16 @@
     methods: {
       save() {
         this.loading = true
-        this.obj.create()
+        this.obj.register()
       },
-
-      addNew() {
-        this.obj.reset();
-        this.obj.saved = false
-      }
     },
 
     mounted() {
       this.obj.reset();
     }
-  };
+  }
 </script>
 
-<style>
+<style scoped>
 
 </style>

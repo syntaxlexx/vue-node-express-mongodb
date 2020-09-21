@@ -3,6 +3,7 @@
       radius
       color="warning"
       type="border"
+      size="small"
       icon-pack="mdi"
       icon="mdi-chevron-left"
       @click="goBack()"

@@ -1,14 +1,15 @@
 const { usersCreate } = require('../middlewares/validation-middleware');
+const { authJwt } = require("../middlewares");
 
 module.exports = (app, express) => {
   const controller = require("../controllers/user.controller.js");
   var router = express.Router()
 
   // Create a new item
-  router.post("/", usersCreate, controller.create);
+  router.post("/", [authJwt.verifyToken, authJwt.isAdmin, usersCreate], controller.create);
 
   // Retrieve all items
-  router.get("/", controller.index);
+  router.get("/", [authJwt.verifyToken], controller.index);
 
   // Retrieve a single item with id
   router.get("/:id", controller.show);

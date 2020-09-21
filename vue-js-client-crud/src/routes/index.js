@@ -26,6 +26,21 @@ let appRoutes = [
         component: () => import("@/components/pages/Home.vue")
       },
       {
+        path: "/starter-page",
+        name: "starter-page",
+        component: () => import("@/components/pages/StarterPage.vue")
+      },
+      {
+        path: "/login",
+        name: "login",
+        component: () => import("@/components/pages/Login.vue")
+      },
+      {
+        path: "/register",
+        name: "register",
+        component: () => import("@/components/pages/Register.vue")
+      },
+      {
         path: "/page-not-found",
         name: "page-not-found",
         component: () => import("@/components/pages/PageNotFound.vue")

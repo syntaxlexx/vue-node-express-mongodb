@@ -116,15 +116,41 @@ export default class User extends Base {
         });
     }
 
+    register() {
+        let data = this.columns
+        this.saved = false;
+        let url = `auth/signup`;
+
+        this.form.submit('post', url, data).then(response => {
+
+            this.saved = true;
+
+            this.selected = response.user
+
+            flash({message: 'Registration Successful', alert: 'success'})
+
+        });
+    }
+
     reset() {
-        this.columns.title = null
-        this.columns.description = null
-        this.columns.published = false
+        this.columns.username = null
+        this.columns.email = null
+        this.columns.password = null
+        this.columns.password_confirmation = null
+        this.columns.first_name = null
+        this.columns.last_name = null
+        this.columns.nickname = null
+        this.columns.phone = null
+        this.columns.roles = ['user']
     }
 
     prefill(data) {
-        this.columns.title = data.title
-        this.columns.description = data.description
-        this.columns.published = data.published
+        this.columns.username = data.username
+        this.columns.email = data.email
+        this.columns.phone = data.phone
+        this.columns.first_name = data.first_name
+        this.columns.last_name = data.last_name
+        this.columns.nickname = data.nickname
+        this.columns.roles = data.user.roles
     }
 }

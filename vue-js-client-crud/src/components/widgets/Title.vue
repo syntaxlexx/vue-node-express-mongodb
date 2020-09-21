@@ -8,11 +8,11 @@
       <div v-if="subtitle" class="subtitle" :class="subtitleClasses" v-html="subtitle"></div>
     </div>
 
-    <div class="tw-w-1/4 md:tw-w-auto tw-mb-5" v-if="back !== undefined">
+    <div class="tw-w-1/4 md:tw-w-auto tw-mb-5 tw-pl-4" v-if="back !== undefined">
       <back-button></back-button>
     </div>
 
-    <div class="tw-w-full md:tw-w-auto md:tw-ml-auto tw-pl-0 md:tw-pl-4 tw-mb-4">
+    <div class="tw-w-full md:tw-w-auto md:tw-ml-auto tw-pl-4 md:tw-pl-0 tw-mb-4">
       <slot name="right"></slot>
     </div>
 
