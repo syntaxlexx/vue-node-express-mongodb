@@ -82,9 +82,11 @@
                 echo '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
                 echo 'Project: {{ $item['name'] }}'
                 echo '------------------------------------------'
-                echo "Restarting PM2"
                 cd {{ $item['app_dir'] }}
                 cd {{ $item['app_node_dir'] }}
+                echo "Running npm i"
+                npm i
+                echo "Restarting PM2"
                 pm2 stop {{ $item['script_file'] }}
                 pm2 start {{ $item['script_file'] }}
                 echo "Done!"
