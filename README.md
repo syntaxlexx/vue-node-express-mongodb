@@ -2,6 +2,7 @@
 A demo project to showcase usage of vue and node-powered backend service.
 
 ![Screenshot1](screenshot-vuemongo.jpg)
+![Screenshot2](screenshot-vuemongo-2.jpg)
 
 
 ## The Setup
