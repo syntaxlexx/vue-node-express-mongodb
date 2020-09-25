@@ -7,15 +7,8 @@ const app = express();
 app.use(helmet());
 const router = express.Router();
 
-// const corsConfig = require('./config/cors.config');
-var corsOptions = {
-  origin: [
-    "http://localhost:8081",
-    "http://nodejslive.test",
-    "https://eager-galileo-1369f9.netlify.app"
-  ]
-};
-app.use(cors(corsOptions));
+const corsConfig = require('./config/cors.config');
+app.use(cors(corsConfig.corsOptions));
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
