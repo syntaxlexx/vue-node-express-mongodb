@@ -139,6 +139,7 @@
 
   export default {
     name: "users-index",
+    title: "Users Mgmt",
 
     mixins: [
       paginatorMixin,

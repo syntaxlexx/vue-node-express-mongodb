@@ -31,7 +31,8 @@ Backend
 `Do you need it really?`
 
 ## Tech Stack
-### Node
+### Backend
+- Node - Obviously!
 - Express - Obviously!
 - bcryptjs + jsonwebtoken - Authentication
 - cors - Allow specific domains to connect to backend
@@ -72,7 +73,8 @@ total: 7
 Read more on the `README` inside the node folder
 
 ### Frontend
-- Vue + vue-router + vuex - Obviously!
+- Vue + vuex - Obviously!
+- Vue-router - handle routing + auth routes protection
 - Vuesax - Beautiful Vue Admin Template
 - SASS - Better/Faster CSS writing/mgmt
 - Material Design Icons (mdi) - From the community

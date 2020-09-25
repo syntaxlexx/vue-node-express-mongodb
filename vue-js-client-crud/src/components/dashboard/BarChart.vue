@@ -24,9 +24,9 @@ export default {
         ]
       },
       { responsive: true, maintainAspectRatio: false, scales: {
-              xAxes: [{
-                  barThickness: 7,
-              }]
+          xAxes: [{
+              barThickness: 7,
+          }]
           } }
     );
   }

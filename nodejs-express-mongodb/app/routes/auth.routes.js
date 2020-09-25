@@ -1,4 +1,4 @@
-const { signIn, signup } = require('../middlewares/validation-middleware');
+const { signIn, signup } = require('../middlewares/validators');
 const controller = require("../controllers/auth.controller");
 
 module.exports = function(app, express) {

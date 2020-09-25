@@ -9,9 +9,9 @@ const resourceName = 'Tutorial'
  * @param {*} res 
  */
 exports.index = (req, res) => {
-  const { page, size, title } = req.query;
-  var condition = title
-    ? { title: { $regex: new RegExp(title), $options: "i" } }
+  const { page, size, search } = req.query;
+  var condition = search
+    ? { title: { $regex: new RegExp(search), $options: "i" } }
     : {};
 
   Model.paginate(condition, getPaginationOptions(page, size))

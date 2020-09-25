@@ -1,4 +1,4 @@
-const { tutorialsCrud } = require('../middlewares/validation-middleware');
+const { tutorialsCrud } = require('../middlewares/validators');
 
 module.exports = (app, express) => {
     const controller = require("../controllers/tutorial.controller.js");

@@ -162,6 +162,7 @@
 
   export default {
     name: "Register",
+    title: "Register",
 
     data() {
       return {

@@ -62,6 +62,8 @@
 
   export default {
     name: "tutorials-show",
+    title: "View/Edit Tutorial",
+
     data() {
       return {
         obj: new Tutorial(),

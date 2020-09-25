@@ -25,7 +25,9 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
     "mongoose": "^5.10.5",
+    "mongoose-findorcreate": "^3.0.0",
     "mongoose-paginate-v2": "^1.3.9",
+    "request-country": "^0.1.5",
     "validatorjs": "^3.19.2"
   }
 }

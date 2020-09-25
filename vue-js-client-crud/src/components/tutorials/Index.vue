@@ -132,6 +132,7 @@
 
   export default {
     name: "tutorials-index",
+    title: "Tutorials",
 
     mixins: [
       paginatorMixin,
@@ -220,12 +221,12 @@
 
       handlePageChange(page) {
         this.page = page;
-        this.get(page);
+        this.get();
       },
 
       handlePageSizeChange() {
         this.page = 1;
-        this.get(this.page);
+        this.get();
       },
 
       refreshList() {

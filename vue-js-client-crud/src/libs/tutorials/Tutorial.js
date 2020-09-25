@@ -7,6 +7,7 @@
 
 import Base from '@/libs/requests/Base';
 import Form from '@/libs/requests/Form';
+import Analytics from "@/libs/analytics/Analytics";
 
 import { fields } from './TutorialRepository';
 const routePrefix = 'tutorials'
@@ -17,6 +18,8 @@ export default class Tutorial extends Base {
         super(fields);
 
         this.form = new Form(fields);
+
+        this.analytics = new Analytics();
 
         this.selected = null;
 
@@ -36,6 +39,8 @@ export default class Tutorial extends Base {
         this.form.submit('get', url).then(response => {
 
             this.tutorials = response;
+
+            this.analytics.logQuery(params.search, params)
 
         });
     }

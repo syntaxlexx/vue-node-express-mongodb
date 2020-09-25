@@ -62,6 +62,7 @@
 
   export default {
     name: 'Home',
+    title: 'Home',
 
     components: {
       SalesSummary,

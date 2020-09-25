@@ -1,4 +1,4 @@
-const { usersCreate } = require('../middlewares/validation-middleware');
+const { usersCreate } = require('../middlewares/validators');
 const { authJwt } = require("../middlewares");
 
 module.exports = (app, express) => {

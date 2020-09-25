@@ -12,5 +12,8 @@ module.exports = (mongoose) => {
     return object;
   });
 
+  const findOrCreate = require('mongoose-findorcreate')
+  schema.plugin(findOrCreate);
+
   return mongoose.model("Role", schema);
 }

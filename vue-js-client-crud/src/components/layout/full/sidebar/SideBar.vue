@@ -20,8 +20,7 @@
       <template v-for="(sidebarLink, index) in sidebarLinks" >
           <vs-sidebar-item 
             :icon="sidebarLink.icon" 
-            :icon-pack="sidebarLink.iconPack" 
-            :to="sidebarLink.url" 
+            :to="sidebarLink.url"
             :key="`sidebarLink-${index}`" 
             :index="index"
             @click="handleClicked(sidebarLink)"
@@ -29,6 +28,13 @@
             <span class="hide-in-minisidebar">{{ sidebarLink.name }}</span>
           </vs-sidebar-item>
       </template>
+
+      <vs-sidebar-item
+          icon="mdi-logout"
+          @click="logout()"
+      >
+        <span class="hide-in-minisidebar">Logout</span>
+      </vs-sidebar-item>
     
       <div class="footer-sidebar" slot="footer">
           <vs-button icon="mdi-github" icon-pack="mdi" color="danger" type="flat" href="https://github.com/lexxyungcarter/vue-node-express-mongodb">Github</vs-button>
@@ -101,6 +107,10 @@
           this.$store.commit('IS_SIDEBAR_ACTIVE', false);
           this.doNotClose= false
         }
+      },
+
+      logout() {
+        Event.fire('APP_LOGOUT', 'sidebar')
       }
     },
 

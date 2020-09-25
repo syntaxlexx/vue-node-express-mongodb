@@ -7,11 +7,11 @@ export const paginatorMixin = {
     };
   },
   methods: {
-    getRequestParams(searchTitle, page, pageSize) {
+    getRequestParams(search, page, pageSize) {
       let params = {};
 
-      if (searchTitle) {
-        params["title"] = searchTitle;
+      if (search) {
+        params["search"] = search;
       }
 
       if (page) {

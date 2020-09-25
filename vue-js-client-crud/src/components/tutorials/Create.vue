@@ -46,6 +46,8 @@
 
   export default {
     name: "tutorials-create",
+    title: "Add A Tutorial",
+
     data() {
       return {
         obj: new Tutorial(),

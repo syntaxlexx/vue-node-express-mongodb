@@ -169,6 +169,7 @@
 
   export default {
     name: "users-create",
+    title: "Add a New User",
 
     data() {
       return {

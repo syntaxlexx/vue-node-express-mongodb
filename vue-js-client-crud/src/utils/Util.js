@@ -87,6 +87,8 @@ export const apiEndpoint = '/api/';
 
 export const immigrantKey = 'nomad';
 
+export const userKey = 'walter';
+
 export const cKey = 'gengetones';
 
 export const settingsKey = 'acelords_platforms';

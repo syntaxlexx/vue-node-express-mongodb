@@ -9,7 +9,7 @@ import Base from '@/libs/requests/Base';
 import Form from '@/libs/requests/Form';
 
 import { fields } from "./AuthRepository";
-import { borderPatrol } from "@/utils/Customs";
+import { borderPatrol, setUserToStorage } from "@/utils/Customs";
 
 export default class Auth extends Base {
     constructor() {
@@ -31,6 +31,8 @@ export default class Auth extends Base {
         this.form.submit('post', url, data).then(response => {
 
             this.user = response.user;
+
+            setUserToStorage(this.user);
 
             if(response.hasOwnProperty('access_token')) {
                 borderPatrol({

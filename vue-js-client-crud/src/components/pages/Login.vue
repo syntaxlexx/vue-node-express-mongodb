@@ -8,6 +8,14 @@
       <img src="@/assets/logo.png" class="img-fluid" alt="Logo!" style="max-height: 120px;">
 
       <div v-if="! authenticated">
+        <vs-alert color="info" class="tw-my-3">
+          For demo purposes, use these credentials for Admin
+          <br/>
+          Username: <strong>admin</strong>
+          <br/>
+          Password: <strong>admin</strong>
+        </vs-alert>
+
         <form class="tw-flex tw-flex-col tw-items-center tw-my-10" @submit.prevent="submit">
           <vs-input
               label-placeholder="Username"
@@ -51,6 +59,11 @@
 
         <div class="tw-text-center">
           Welcome back, {{ user.username }}.
+
+          <br/>
+          <br/>
+          <vs-button type="gradient" color="primary" :to="{name: 'home'}">Go To Dashboard</vs-button>
+
         </div>
       </div>
 
@@ -63,6 +76,7 @@
 
   export default {
     name: "Login",
+    title: "Login",
 
     data() {
       return {

@@ -35,6 +35,11 @@ export default [
 		icon:"mdi-shield-account",
 	},
 	{
+		url:"/analytics",
+		name:"Analytics",
+		icon:"mdi-chart-areaspline",
+	},
+	{
 		url:"/page-not-found",
 		name:"Page Not Found",
 		icon:"mdi-alert-rhombus-outline",

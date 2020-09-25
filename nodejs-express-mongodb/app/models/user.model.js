@@ -26,6 +26,8 @@ module.exports = (mongoose, mongoosePaginate) => {
   });
 
   schema.plugin(mongoosePaginate);
+  const findOrCreate = require('mongoose-findorcreate')
+  schema.plugin(findOrCreate);
 
   return mongoose.model("User", schema);
 }

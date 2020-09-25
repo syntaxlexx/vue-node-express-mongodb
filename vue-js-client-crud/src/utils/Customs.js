@@ -6,9 +6,13 @@
  * Time: 01:41
  */
 
-import { immigrantKey, cKey } from './Util';
+import { immigrantKey, cKey, userKey } from './Util';
 var CryptoJS = require("crypto-js");
 
+/**
+ * get credentials for authentication
+ * @returns {{headers: {Accept: string, "x-access-token": string}}|{}}
+ */
 export const visa = () => {
 
     let tData = JSON.parse(window.localStorage.getItem(immigrantKey));
@@ -30,10 +34,26 @@ export const visa = () => {
     return { };
 }
 
-export const logout = () => {
-    window.localStorage.removeItem(immigrantKey);
+/**
+ * check if authenticated
+ * @returns {boolean}
+ */
+export const isAuthenticated = () => {
+    return !!window.localStorage.getItem(immigrantKey);
 }
 
+/**
+ * clear storage to logout user
+ */
+export const logout = () => {
+    window.localStorage.removeItem(immigrantKey);
+    window.localStorage.removeItem(userKey);
+}
+
+/**
+ * save tokens to storage
+ * @param pp
+ */
 export const borderPatrol = (pp) => {
     let received;
     try {
@@ -56,4 +76,21 @@ export const borderPatrol = (pp) => {
         let yungcarter = CryptoJS.AES.encrypt(received, cKey).toString();
         window.localStorage.setItem(immigrantKey, yungcarter);
     }
+}
+
+/**
+ * set user to storage
+ * @param user
+ */
+export const setUserToStorage = (user) => {
+    window.localStorage.setItem(userKey, JSON.stringify(user));
+}
+
+/**
+ * get user from storage
+ * @returns {any}
+ */
+export const getUserFromStorage = () => {
+    let user = window.localStorage.getItem(userKey)
+    return user ? JSON.parse(user) : null
 }

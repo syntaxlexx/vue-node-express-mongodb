@@ -9,6 +9,8 @@
 
   export default {
     name: "users-show",
+    title: "User Info",
+
     data() {
       return {
         
