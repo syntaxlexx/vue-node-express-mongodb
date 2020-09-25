@@ -1,73 +1,76 @@
 <template>
-  <div class="tw-flex tw-justify-center tw-items-center">
-    <vs-card class="tw-max-w-3xl tw-text-center">
-      <div slot="header">
-        <h3>Login</h3>
-      </div>
+  <div>
+    <vs-loading :loading="loading"></vs-loading>
+    <div class="tw-flex tw-justify-center tw-items-center">
+      <vs-card class="tw-max-w-3xl tw-text-center">
+        <div slot="header">
+          <h3>Login</h3>
+        </div>
 
-      <img src="@/assets/logo.png" class="img-fluid" alt="Logo!" style="max-height: 120px;">
+        <img src="@/assets/logo.png" class="img-fluid" alt="Logo!" style="max-height: 120px;">
 
-      <div v-if="! authenticated">
-        <vs-alert color="info" class="tw-my-3">
-          For demo purposes, use these credentials for Admin
-          <br/>
-          Username: <strong>admin</strong>
-          <br/>
-          Password: <strong>admin</strong>
-        </vs-alert>
+        <div v-if="! authenticated">
+          <vs-alert color="info" class="tw-my-3">
+            For demo purposes, use these credentials for Admin
+            <br/>
+            Username: <strong>admin</strong>
+            <br/>
+            Password: <strong>admin</strong>
+          </vs-alert>
 
-        <form class="tw-flex tw-flex-col tw-items-center tw-my-10" @submit.prevent="submit">
-          <vs-input
-              label-placeholder="Username"
-              v-model="obj.columns.username"
-              name="username"
-              id="username"
-              required
-          />
-          <br/>
+          <form class="tw-flex tw-flex-col tw-items-center tw-my-10" @submit.prevent="submit">
+            <vs-input
+                label-placeholder="Username"
+                v-model="obj.columns.username"
+                name="username"
+                id="username"
+                required
+            />
+            <br/>
 
-          <vs-input
-              label-placeholder="Password"
-              v-model="obj.columns.password"
-              :type="passwordType"
-              name="password"
-              id="password"
-              icon="mdi-eye"
-              icon-after
-              v-on:icon-click="togglePassword = !togglePassword"
-              val-icon-danger="mdi-alert"
-              required
-          />
-          <br/>
+            <vs-input
+                label-placeholder="Password"
+                v-model="obj.columns.password"
+                :type="passwordType"
+                name="password"
+                id="password"
+                icon="mdi-eye"
+                icon-after
+                v-on:icon-click="togglePassword = !togglePassword"
+                val-icon-danger="mdi-alert"
+                required
+            />
+            <br/>
 
-          <vs-error :errors="errors"></vs-error>
+            <vs-error :errors="errors"></vs-error>
 
-          <vs-button type="gradient" color="primary" button="submit">Login</vs-button>
-        </form>
-
-      </div>
-
-      <div v-else>
-        <vs-alert
-            :active="true"
-            color="success"
-            icon="mdi-check"
-            class="tw-my-4"
-        >
-          <div>Successfully Logged In</div>
-        </vs-alert>
-
-        <div class="tw-text-center">
-          Welcome back, {{ user.username }}.
-
-          <br/>
-          <br/>
-          <vs-button type="gradient" color="primary" :to="{name: 'home'}">Go To Dashboard</vs-button>
+            <vs-button type="gradient" color="primary" button="submit">Login</vs-button>
+          </form>
 
         </div>
-      </div>
 
-    </vs-card>
+        <div v-else>
+          <vs-alert
+              :active="true"
+              color="success"
+              icon="mdi-check"
+              class="tw-my-4"
+          >
+            <div>Successfully Logged In</div>
+          </vs-alert>
+
+          <div class="tw-text-center">
+            Welcome back, {{ user.username }}.
+
+            <br/>
+            <br/>
+            <vs-button type="gradient" color="primary" :to="{name: 'home'}">Go To Dashboard</vs-button>
+
+          </div>
+        </div>
+
+      </vs-card>
+    </div>
   </div>
 </template>
 

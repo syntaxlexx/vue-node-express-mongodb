@@ -85,6 +85,23 @@ const router = new Router({
   },
 });
 
+/**
+ * check if user has certain role
+ *
+ * @param user
+ * @param role
+ * @returns {boolean}
+ */
+const userHasRole = (user, role) => {
+  let status = false
+  user.roles.forEach(it => {
+    if (it.name == role) {
+      status = true
+    }
+  })
+
+  return status;
+}
 
 /**
  * update title if meta exists
@@ -99,7 +116,7 @@ router.beforeEach((to, from, next) => {
     } else {
       let user = getUserFromStorage()
       if(to.matched.some(record => record.meta.is_admin)) {
-        if(user.is_admin == 1 || user.roles.includes('admin')){
+        if(user.is_admin == 1 || userHasRole(user, 'admin')) {
           // next()
           // allow continuation to set meta title data below
         }
