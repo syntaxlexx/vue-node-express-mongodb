@@ -7,8 +7,8 @@ const app = express();
 app.use(helmet());
 const router = express.Router();
 
-const { corsOptions } = require('./config/cors.config');
-app.use(cors(corsOptions));
+const corsConfig = require('./config/cors.config');
+app.use(cors(corsConfig.corsOptions));
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
