@@ -30,6 +30,14 @@ exports.index = (req, res) => {
       require('../library/analytics/top-queries')(req, res)
       break;
 
+    case 'top-countries':
+      require('../library/analytics/top-countries')(req, res)
+      break;
+
+    case 'top-os':
+      require('../library/analytics/top-os')(req, res)
+      break;
+
     default:
       break;
   }

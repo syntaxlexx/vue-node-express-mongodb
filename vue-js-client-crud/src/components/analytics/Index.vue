@@ -27,6 +27,8 @@
   import TopPages from "./TopPages";
   import Queries from "./Queries";
   import TopQueries from "./TopQueries";
+  import TopCountries from "./TopCountries";
+  import TopOs from "./TopOs";
 
   export default {
     name: "analytics-index",
@@ -38,6 +40,8 @@
       TopPages,
       Queries,
       TopQueries,
+      TopCountries,
+      TopOs,
     },
 
     data() {
@@ -46,6 +50,8 @@
           { name: 'Traffic', component: 'Traffic'},
           { name: 'Browser Stats', component: 'BrowserStats'},
           { name: 'Top Pages', component: 'TopPages'},
+          { name: 'Top Countries', component: 'TopCountries'},
+          { name: 'Top OS', component: 'TopOs'},
           { name: 'Queries', component: 'Queries'},
           { name: 'Top Queries', component: 'TopQueries'},
         ]

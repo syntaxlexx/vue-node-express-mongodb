@@ -4,7 +4,7 @@
       <div>
         <div class="tw-flex">
           <vs-input
-              placeholder="Search"
+              placeholder="Search (term)"
               icon="mdi-magnify"
               v-model="search"
           />
